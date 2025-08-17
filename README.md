@@ -13,6 +13,7 @@ All resources were created using **AWS-managed infrastructure**. No custom VPC, 
 - **AWS Lambda** — Node.js functions implementing Create, Read, Update, and Delete operations.
 - **Amazon DynamoDB** — NoSQL database for storing customer information.
 - **Amazon S3** — static website hosting for the frontend.
+- **Amazon CloudFront** - CDN distribution serving the static files stored in S3.
 - **AWS IAM** — managing permissions with least-privilege access.
 - **Amazon CloudWatch** — monitoring and logging.
 
@@ -34,7 +35,6 @@ A DynamoDB table named **`Customers`** was created with:
 We implemented a **REST API** in API Gateway with the following characteristics:
 
 - Integrated with AWS Lambda functions for backend logic for each of the endpoints.
-- CORS enabled for integration with the frontend, with **Cross-Origin Resource Sharing (CORS)** settings configured to allow the S3 bucket domain.
 - Endpoints:
   - **POST `/customers`** — Create a new customer.
   - **GET `/customers`** — Retrieve all customers.
@@ -62,7 +62,13 @@ The frontend is a static website hosted on **Amazon S3**, consisting of:
 
 The S3 bucket was configured with:
 - **Static website hosting** enabled
-- **Public Policy** allowing GetObject from *.
+- **Policy** allowing GetObject from the cloudFront distribution.
+
+---
+
+## Amazon CloudFront
+Amazon CloudFront was added as a Content Delivery Network (CDN) in front of the Amazon S3 bucket that hosts the static website.  
+The distribution is responsible for caching and accelerating static assets (HTML, CSS, JavaScript, images).
 
 ---
 
